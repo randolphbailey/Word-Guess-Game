@@ -6,7 +6,7 @@ var workingWord = "";
 var workingArray = [];
 var lettersGuessed = [];
 var guessesLeft = 8;
-var animals = ['antelope', 'elephant', 'giraffe', 'zebra', 'cheetah', 'springbok', 'buffalo', 'crocodile', 'hippopotamus', 'gorilla'];
+var animals = ['antelope', 'elephant', 'giraffe', 'zebra', 'cheetah', 'springbok', 'buffalo', 'crocodile', 'hippopotamus', 'gorilla', 'wildebeest', 'rhinoceros', 'flamingo', 'ostrich'];
 
 function hasntAlreadyGuessed() {
     if (lettersGuessed.indexOf(event.key) == -1) {
@@ -75,7 +75,7 @@ function getRndInteger(min, max) {
 
 function initWord() {
     workingWord = "";
-    let randInt = getRndInteger(0, 9);
+    let randInt = getRndInteger(0, animals.length - 1);
     currentWord = animals[randInt];
     console.log(currentWord);
     for (let i=0; i < currentWord.length; i++) {
