@@ -58,7 +58,6 @@ function win() {  //Adds to the win counter and displays animal picture
     document.getElementById("winsCounter").innerText = winsCounter;
     document.getElementById("anipic").src = "assets/images/" + currentWord + ".jpg";
     document.getElementById("gameResult").innerText = "Correct! Animal was a " + currentWord;
-    newGame();
 }
 
 function lose() { //Adds to the losses counter and displays animal picture
@@ -66,7 +65,6 @@ function lose() { //Adds to the losses counter and displays animal picture
     document.getElementById("lossesCounter").innerText = lossesCounter;
     document.getElementById("anipic").src = "assets/images/" + currentWord + ".jpg";
     document.getElementById("gameResult").innerText = "Wrong :( Animal was a " + currentWord;
-    newGame();
 }
 
 function getRndInteger(min, max) { //Random Integer Generator
