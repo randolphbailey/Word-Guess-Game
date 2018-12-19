@@ -5,22 +5,22 @@ var currentWord = "";
 var workingWord = "";
 var workingArray = [];
 var lettersGuessed = [];
-var guessesLeft = 8;
+var guessesLeft = 6;
 var animals = ['antelope', 'elephant', 'giraffe', 'zebra', 'cheetah', 'springbok', 'buffalo', 'crocodile', 'hippopotamus', 'gorilla', 'wildebeest', 'rhinoceros', 'flamingo', 'ostrich'];
 
-function hasntAlreadyGuessed() {
+function AlreadyGuessed() {  //If the letter has already been guessed, returns true, otherwise returns false.
     if (lettersGuessed.indexOf(event.key) == -1) {
-        return true;
+        return false;
     }
     else {
-        return false;
+        return true;
     }
 }
 
-function letterIndex() {  //Returns array of index positions of letter guessed if in string.  Otherwise returns boolean false
+function letterIndex() {  //Handles letter guess area of hangman
     let guessIndex = [];
     workingArray = workingWord.split("");
-    if (hasntAlreadyGuessed()) {
+    if (!AlreadyGuessed()) {
         for (let i=0; i < currentWord.length; i++) {
             if (currentWord[i] == event.key) {
                 guessIndex.push(i);
@@ -41,35 +41,35 @@ function letterIndex() {  //Returns array of index positions of letter guessed i
     }
 }
 
-function handleLettersGuessed() {
-    if (hasntAlreadyGuessed()){
-    let strPrint = "";
-    lettersGuessed.push(event.key);
-    for (let i=0; i < lettersGuessed.length; i++) {
-        strPrint = strPrint.concat(lettersGuessed[i], " ");
+function handleLettersGuessed() {  //Handles letters already guessed section, prevents repeat letters
+    if (!AlreadyGuessed()){
+        let strPrint = "";
+        lettersGuessed.push(event.key);
+        for (let i=0; i < lettersGuessed.length; i++) {
+            strPrint = strPrint.concat(lettersGuessed[i], " ");
+        }
+        document.getElementById("lettersGuessed").innerText = strPrint.toUpperCase();
+        return true;
     }
-    document.getElementById("lettersGuessed").innerText = strPrint.toUpperCase();
-    guessesLeft--;
-    document.getElementById("guessesLeft").innerText = guessesLeft;
-    return true;
-}
 }
 
-function win() {
+function win() {  //Adds to the win counter and displays animal picture
     winsCounter++;
     document.getElementById("winsCounter").innerText = winsCounter;
     document.getElementById("anipic").src = "assets/images/" + currentWord + ".jpg";
+    document.getElementById("gameResult").innerText = "Correct! Animal was a " + currentWord;
     newGame();
 }
 
-function lose() {
+function lose() { //Adds to the losses counter and displays animal picture
     lossesCounter++;
     document.getElementById("lossesCounter").innerText = lossesCounter;
     document.getElementById("anipic").src = "assets/images/" + currentWord + ".jpg";
+    document.getElementById("gameResult").innerText = "Wrong :( Animal was a " + currentWord;
     newGame();
 }
 
-function getRndInteger(min, max) {
+function getRndInteger(min, max) { //Random Integer Generator
     return Math.floor(Math.random() * (max - min + 1) ) + min;
 }
 
@@ -84,28 +84,38 @@ function initWord() {
     document.getElementById("currentWord").innerText = workingWord;
 }
 
-function reset() {
+function reset() {  //resets game scores
     winsCounter = 0;
     lossesCounter = 0;
     document.getElementById("winsCounter").innerText = winsCounter;
     document.getElementById("lossesCounter").innerText = lossesCounter;
 }
 
-function newGame() {
+function newGame() { //sets up a new game without reseting scores
     initWord();
     lettersGuessed = [];
-    guessesLeft = 8;
+    guessesLeft = 6;
     document.getElementById("guessesLeft").innerText = guessesLeft;
     document.getElementById("lettersGuessed").innerText = "";
 }
 
-window.onload = function() {
+function guessHandler() { //Works via magic
+    if (!AlreadyGuessed()){
+        if (currentWord.indexOf(event.key) == -1) {
+            guessesLeft--;
+            document.getElementById("guessesLeft").innerHTML = guessesLeft;
+        }
+    }
+}
+
+window.onload = function() { //Initializes game on first load
     newGame();
     reset();
 }
 
 document.onkeydown = function(event) {
-    letterIndex(event);
+    letterIndex(event);  //Call functions in exactly this order otherwise guesses counter won't work
+    guessHandler();
     handleLettersGuessed(event);
     if (workingWord == currentWord) {
         win();
