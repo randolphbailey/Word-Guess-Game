@@ -71,7 +71,7 @@ function getRndInteger(min, max) { //Random Integer Generator
     return Math.floor(Math.random() * (max - min + 1) ) + min;
 }
 
-function initWord() {
+function initWord() {  //Randomly guesses new word and generates string of underscores of same length
     workingWord = "";
     let randInt = getRndInteger(0, animals.length - 1);
     currentWord = animals[randInt];
@@ -97,7 +97,7 @@ function newGame() { //sets up a new game without reseting scores
     document.getElementById("lettersGuessed").innerText = "";
 }
 
-function guessHandler() { //Works via magic
+function guessHandler() { //Decreases guesses left counter if letter guessed is not in word.  Leaves alone if letter guessed is in word or has already been guessed.
     if (!AlreadyGuessed()){
         if (currentWord.indexOf(event.key) == -1) {
             guessesLeft--;
