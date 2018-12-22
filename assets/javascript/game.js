@@ -95,6 +95,9 @@ function newGame() { //sets up a new game without reseting scores
     guessesLeft = 6;
     document.getElementById("guessesLeft").innerText = guessesLeft;
     document.getElementById("lettersGuessed").innerText = "";
+    document.getElementById("hangman").src = "assets/images/man6.png";
+    document.getElementById("gameResult").innerText = "";
+    document.getElementById("anipic").src = "";
 }
 
 function guessHandler() { //Decreases guesses left counter if letter guessed is not in word.  Leaves alone if letter guessed is in word or has already been guessed.
@@ -102,6 +105,7 @@ function guessHandler() { //Decreases guesses left counter if letter guessed is 
         if (currentWord.indexOf(event.key) == -1) {
             guessesLeft--;
             document.getElementById("guessesLeft").innerHTML = guessesLeft;
+            document.getElementById("hangman").src = "assets/images/man" + guessesLeft + ".png";
         }
     }
 }
